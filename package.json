@@ -1,9 +1,9 @@
 {
   "name": "go-lazy-mock",
 	"displayName": "go-lazy-mock",
-	"description": "",
+	"description": "go mock generate",
 	"version": "0.0.1",
-	"publisher": "nawapb",
+	"publisher": "nawath",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -28,6 +28,10 @@
                 "group": "MyGroup"
           }]
         }
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nawajar/go-lazy-mock.git"
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
