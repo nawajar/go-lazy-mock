@@ -2,7 +2,7 @@
 
 lazy way to gen mock without type
 
-![alt text](https://github.com/nawajar/go-lazy-mock/blob/main/example/1.png)
+![alt text](https://github.com/nawajar/go-lazy-mock/blob/main/example/screen-1.png)
 
 ## Features
 
