@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as cp from "child_process";
+import * as fs from 'fs';
 
 const execShell = (cmd: string) =>
     new Promise<string>((resolve, reject) => {
@@ -19,32 +20,37 @@ const getFilePath = (uri:vscode.Uri) => {
 	return path;
 };
 
-const genMockery = async (path: string): Promise<string> => {
-	return await execShell(`cd ${path} && mockery  --all  --output .  --print`);
+const genMockery = async (path: string, interfaceName: string): Promise<string> => {
+	return await execShell(`cd ${path} && mockery --name ${interfaceName} --print`);
 };
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-	
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "go-lazy-mock" is now active!');
+const getInterfaces = (value: string): Array<string> => {
+	const regex = /type\s([A-Za-z].*)\sinterface/g;
+	var interfaces = new Array;
+	let matches;
+	while ((matches = regex.exec(value)) !== null) {
+		interfaces.push(matches[1]);
+	}
+	return interfaces;
+};
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
+export function activate(context: vscode.ExtensionContext) {
+	console.log('Congratulations, your extension "go-lazy-mock" is now active!');
 	let disposable = vscode.commands.registerCommand('go-lazy-mock.mockGen', async (uri:vscode.Uri) => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		const wsedit = new vscode.WorkspaceEdit();
-		const path = getFilePath(uri);
-		const newFile = vscode.Uri.file(path + '/mocks/mock_.go');
-		wsedit.createFile(newFile, { ignoreIfExists: true });
-		const mockContent = await genMockery(path);
-		wsedit.insert(newFile,new vscode.Position(0, 0), mockContent);
-		vscode.workspace.applyEdit(wsedit);
-		vscode.window.showInformationMessage('go-lazy-mock! generated file', newFile.fsPath);
+		var text = fs.readFileSync(uri.fsPath);
+		const interfaces = getInterfaces(text.toString());
+		if(interfaces && interfaces.length > 0){
+			const wsedit = new vscode.WorkspaceEdit();
+			const path = getFilePath(uri);
+			for(const i of interfaces){
+				const newFile = vscode.Uri.file(path + `/mocks/mock_${i}.go`);
+				wsedit.createFile(newFile, { ignoreIfExists: true });
+				const mockContent = await genMockery(path, i);
+				wsedit.insert(newFile,new vscode.Position(0, 0), mockContent);
+			}
+			vscode.workspace.applyEdit(wsedit);
+			vscode.window.showInformationMessage('go-lazy-mock! generated file');
+		}
 	});
 
 	context.subscriptions.push(disposable);

@@ -2,7 +2,7 @@
   "name": "go-lazy-mock",
 	"displayName": "go-lazy-mock",
 	"description": "go mock generate",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "nawath",
 	"engines": {
 		"vscode": "^1.60.0"
@@ -18,7 +18,7 @@
 		"commands": [
 			{
 				"command": "go-lazy-mock.mockGen",
-				"title": "generate go mock with mockery"
+				"title": "Generate Mock"
 			}
 		],
 		"menus": {
