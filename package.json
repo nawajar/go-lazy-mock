@@ -4,6 +4,7 @@
   "description": "go mock generate",
   "version": "0.0.3",
   "publisher": "nawath",
+  "icon": "images/mindblown.png",
   "engines": {
     "vscode": "^1.60.0"
   },
