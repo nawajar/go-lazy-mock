@@ -2,7 +2,7 @@
   "name": "go-lazy-mock",
   "displayName": "go-lazy-mock",
   "description": "go mock generate",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "nawath",
   "icon": "images/mindblown.png",
   "engines": {
