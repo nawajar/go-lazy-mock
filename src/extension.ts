@@ -15,7 +15,7 @@ const execShell = (cmd: string) =>
     });
 
 const getFilePath = (uri:vscode.Uri) => {
-	const regex = /\/[A-Za-z0-9]+\.go/;
+	const regex = /\/[A-Za-z0-9_-]+\.go/;
 	const path = uri.path.replace(regex, '/');
 	return path;
 };
@@ -38,11 +38,14 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "go-lazy-mock" is now active!');
 	let disposable = vscode.commands.registerCommand('go-lazy-mock.mockGen', async (uri:vscode.Uri) => {
 		var text = fs.readFileSync(uri.fsPath);
+		console.log(text.toString());
 		const interfaces = getInterfaces(text.toString());
+		console.log(interfaces);
+		const wsedit = new vscode.WorkspaceEdit();
 		if(interfaces && interfaces.length > 0){
-			const wsedit = new vscode.WorkspaceEdit();
 			const path = getFilePath(uri);
 			for(const i of interfaces){
+				console.log("path: " + path);
 				const newFile = vscode.Uri.file(path + `/mocks/mock_${i}.go`);
 				wsedit.createFile(newFile, { ignoreIfExists: true });
 				const mockContent = await genMockery(path, i);
