@@ -2,9 +2,11 @@
 
 lazy way to gen mock (Testify) without typing 
 
-![alt text](https://github.com/nawajar/go-lazy-mock/blob/main/example/screen-1.png)
 
 ![Getting Started](./example/screen-1.png)
+
+![Getting Started](./example/screen-2.png)
+
 ## Features
 
 Generate mock file with mockery
