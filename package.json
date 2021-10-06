@@ -1,8 +1,8 @@
 {
   "name": "go-lazy-mock",
-  "displayName": "go-lazy-mock",
-  "description": "go mock generate",
-  "version": "0.0.4",
+  "displayName": "go mock",
+  "description": "go mock generate with mockery",
+  "version": "0.0.5",
   "publisher": "nawath",
   "icon": "images/mindblown.png",
   "engines": {

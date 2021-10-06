@@ -1,4 +1,4 @@
-# go-lazy-mock README
+# go mockery README
 
 lazy way to gen mock (Testify) without typing 
 
