@@ -1,7 +1,6 @@
-# go mockery README
+# Go Mock README
 
 lazy way to gen mock (Testify) without typing 
-
 
 ![Getting Started](./example/screen-1.png)
 
