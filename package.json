@@ -2,15 +2,13 @@
   "name": "go-lazy-mock",
   "displayName": "Go Mock",
   "description": "Go mock generate with mockery",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "nawath",
   "icon": "images/mindblown.png",
   "engines": {
     "vscode": "^1.60.0"
   },
-  "categories": [
-    "Other"
-  ],
+  "categories": [ "Other", "Go", "Programming Languages", "Mockery", "Testify"],
   "activationEvents": [
     "onCommand:go-lazy-mock.mockGen"
   ],

@@ -88,7 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
 				wsedit.insert(newFile,new vscode.Position(0, 0), mockContent);
 			}
 			vscode.workspace.applyEdit(wsedit);
-			vscode.window.showInformationMessage('go-lazy-mock! generated file');
+			vscode.window.showInformationMessage('go-lazy-mock! generated with rename struct file');
 		}
 	});
 
