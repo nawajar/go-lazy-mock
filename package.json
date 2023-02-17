@@ -2,7 +2,7 @@
   "name": "go-lazy-mock",
   "displayName": "Go Mock",
   "description": "Go mock generate with mockery",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "publisher": "nawath",
   "icon": "images/mindblown.png",
   "engines": {
@@ -20,6 +20,10 @@
       {
         "command": "go-lazy-mock.mockGen",
         "title": "Generate Mock"
+      },
+      {
+        "command": "go-lazy-mock.mockGenName",
+        "title": "Generate Mock With Rename Struct"
       }
     ],
     "menus": {
@@ -27,6 +31,11 @@
         {
           "when": "resourceLangId == go",
           "command": "go-lazy-mock.mockGen",
+          "group": "MyGroup"
+        },
+        {
+          "when": "resourceLangId == go",
+          "command": "go-lazy-mock.mockGenName",
           "group": "MyGroup"
         }
       ]

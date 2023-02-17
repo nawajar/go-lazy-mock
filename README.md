@@ -1,25 +1,31 @@
 # Go Mock README
 
-lazy way to gen mock (Testify) without typing 
-
-
-## Install 
-vs code extension market or build you own.
-
-![Getting Started](./example/extension.png)
-
-![Getting Started](./example/screen-1.png)
-
-![Getting Started](./example/screen-3.png)
-
 ## Features
+Generate mock file with mockery.
 
-Generate mock file with mockery
+Lazy way to gen mock (Testify) without typing.
+
 
 ## Requirements
-
-you have to install mockery
+you have to install mockery with repository
 
 https://github.com/vektra/mockery.git
+
+or 
+
+```
+brew install mockery
+```
+
+## new version update with rename struct
+
+![Getting Started](./example/screen-4.png)
+
+![Getting Started](./example/screen-5.png)
+
+![Getting Started](./example/screen-6.png)
+
+
+
 
 

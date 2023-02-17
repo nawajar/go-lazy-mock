@@ -24,6 +24,10 @@ const genMockery = async (path: string, interfaceName: string): Promise<string> 
 	return await execShell(`cd ${path} && mockery --name ${interfaceName} --print`);
 };
 
+const genMockeryRenameStruct = async (path: string, interfaceName: string, renameInterface: string): Promise<string> => {
+	return await execShell(`cd ${path} && mockery --name ${interfaceName} --structname ${renameInterface} --print`);
+};
+
 const getInterfaces = (value: string): Array<string> => {
 	const regex = /type\s([A-Za-z].*)\sinterface/g;
 	var interfaces = new Array;
@@ -32,6 +36,19 @@ const getInterfaces = (value: string): Array<string> => {
 		interfaces.push(matches[1]);
 	}
 	return interfaces;
+};
+
+const getStructName = async (interfaceName: string): Promise<string> => {
+	const structName = await vscode.window.showInputBox({
+		placeHolder: "Enter rename struct",
+		prompt: `rename struct for ${interfaceName}`,
+		value: interfaceName
+	  });
+	  if(structName == ''){
+		vscode.window.showErrorMessage('A struct name is mandatory to execute this action');
+		return '';
+	  }
+	return structName == undefined ? '' : structName;  
 };
 
 export function activate(context: vscode.ExtensionContext) {
@@ -53,8 +70,34 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
+	let disposableWithName = vscode.commands.registerCommand('go-lazy-mock.mockGenName', async (uri:vscode.Uri) => {
+		
+		var text = fs.readFileSync(uri.fsPath);
+		const interfaces = getInterfaces(text.toString());
+		const wsedit = new vscode.WorkspaceEdit();
+		if(interfaces && interfaces.length > 0){
+			const path = getFilePath(uri);
+			for(const i of interfaces){
+				const structName = await getStructName(i);
+				if('' == structName) {
+					continue;
+				}
+				const newFile = vscode.Uri.file(path + `/mocks/mock_${structName}.go`);
+				wsedit.createFile(newFile, { ignoreIfExists: true });
+				const mockContent = await genMockeryRenameStruct(path, i, structName);
+				wsedit.insert(newFile,new vscode.Position(0, 0), mockContent);
+			}
+			vscode.workspace.applyEdit(wsedit);
+			vscode.window.showInformationMessage('go-lazy-mock! generated file');
+		}
+	});
+
 	context.subscriptions.push(disposable);
+	context.subscriptions.push(disposableWithName);
 }
+
+
+
 
 // this method is called when your extension is deactivated
 export function deactivate() {}
